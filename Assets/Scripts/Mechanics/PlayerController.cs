@@ -11,6 +11,8 @@ namespace Platformer.Mechanics
         public AudioClip respawnAudio;
         public AudioClip ouchAudio;
 
+        public Rigidbody2D gift;
+
         /// <summary>
         /// Max horizontal speed of the player.
         /// </summary>
@@ -40,18 +42,22 @@ namespace Platformer.Mechanics
 
         protected override void Update()
         {
-            if (controlEnabled)
-            {
-                move.x = Input.GetAxis("Horizontal");
-                move.y = Input.GetAxis("Vertical");
-            }
-            else
+            base.Update();
+
+            if (!controlEnabled)
             {
                 move.x = 0;
                 move.y = 0;
+                return;
             }
 
-            base.Update();
+            move.x = Input.GetAxis("Horizontal");
+            move.y = Input.GetAxis("Vertical");
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                DropGift();
+            }
         }
 
         protected override void ComputeVelocity()
@@ -70,6 +76,11 @@ namespace Platformer.Mechanics
             animator.SetFloat("velocityY", Mathf.Abs(velocity.y) / maxSpeed);
 
             targetVelocity = move * maxSpeed;
+        }
+
+        private void DropGift()
+        {
+            Instantiate(gift, transform.position, Quaternion.identity);
         }
     }
 }
