@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Platformer.Mechanics
 {
@@ -12,7 +10,7 @@ namespace Platformer.Mechanics
         /// <summary>
         /// The minimum normal (dot product) considered suitable for the entity sit on.
         /// </summary>
-        public float minGroundNormalY = .65f;
+        public float minGroundNormalY = .45f;
 
         /// <summary>
         /// A custom gravity coefficient applied to this entity.
@@ -65,6 +63,11 @@ namespace Platformer.Mechanics
         /// <param name="position"></param>
         public void Teleport(Vector3 position)
         {
+            if (body == null)
+            {
+                body = GetComponent<Rigidbody2D>();
+            }
+
             body.position = position;
             velocity *= 0;
             body.velocity *= 0;
@@ -101,21 +104,27 @@ namespace Platformer.Mechanics
 
         protected virtual void FixedUpdate()
         {
+            velocity.x = targetVelocity.x;
+            velocity.y = targetVelocity.y;
+
             //if already falling, fall faster than the jump speed, otherwise use normal gravity.
             if (velocity.y < 0)
-                velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
+            {
+                velocity += gravityModifier * Time.deltaTime * Physics2D.gravity;
+            }
             else
+            {
                 velocity += Physics2D.gravity * Time.deltaTime;
+            }
 
-            velocity.x = targetVelocity.x;
 
             IsGrounded = false;
 
-            var deltaPosition = velocity * Time.deltaTime;
+            Vector2 deltaPosition = velocity * Time.deltaTime;
 
-            var moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
+            Vector2 moveAlongGround = new(groundNormal.y, -groundNormal.x);
 
-            var move = moveAlongGround * deltaPosition.x;
+            Vector2 move = moveAlongGround * deltaPosition.x;
 
             PerformMovement(move, false);
 
@@ -127,15 +136,16 @@ namespace Platformer.Mechanics
 
         void PerformMovement(Vector2 move, bool yMovement)
         {
-            var distance = move.magnitude;
+            float distance = move.magnitude;
 
             if (distance > minMoveDistance)
             {
                 //check if we hit anything in current direction of travel
-                var count = body.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
-                for (var i = 0; i < count; i++)
+                int count = body.Cast(move, contactFilter, hitBuffer, distance + shellRadius);
+
+                for (int i = 0; i < count; i++)
                 {
-                    var currentNormal = hitBuffer[i].normal;
+                    Vector2 currentNormal = hitBuffer[i].normal;
 
                     //is this surface flat enough to land on?
                     if (currentNormal.y > minGroundNormalY)
@@ -148,14 +158,15 @@ namespace Platformer.Mechanics
                             currentNormal.x = 0;
                         }
                     }
+
                     if (IsGrounded)
                     {
                         //how much of our velocity aligns with surface normal?
-                        var projection = Vector2.Dot(velocity, currentNormal);
+                        float projection = Vector2.Dot(velocity, currentNormal);
                         if (projection < 0)
                         {
                             //slower velocity if moving against the normal (up a hill).
-                            velocity = velocity - projection * currentNormal;
+                            velocity -= projection * currentNormal;
                         }
                     }
                     else
@@ -164,12 +175,14 @@ namespace Platformer.Mechanics
                         velocity.x *= 0;
                         velocity.y = Mathf.Min(velocity.y, 0);
                     }
+
                     //remove shellDistance from actual move distance.
-                    var modifiedDistance = hitBuffer[i].distance - shellRadius;
+                    float modifiedDistance = hitBuffer[i].distance - shellRadius;
                     distance = modifiedDistance < distance ? modifiedDistance : distance;
                 }
             }
-            body.position = body.position + move.normalized * distance;
+
+            body.position += move.normalized * distance;
         }
 
     }

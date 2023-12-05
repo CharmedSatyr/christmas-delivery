@@ -1,47 +1,74 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.InputSystem;
 
-public class PlayerController2 : MonoBehaviour
+namespace Platformer.Mechanics
 {
 
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerController2 : KinematicObject
     {
-        
-    }
+        public AudioClip respawnAudio;
+        public AudioClip ouchAudio;
 
-    // Update is called once per frame
-    void Update()
-    {
-        float horizontal = 0.0f;
-        if(Keyboard.current.leftArrowKey.isPressed)
+        /// <summary>
+        /// Max horizontal speed of the player.
+        /// </summary>
+        public float maxSpeed = 7;
+
+        /*internal new*/
+        public Collider2D collider2d;
+        /*internal new*/
+        public AudioSource audioSource;
+        public Health health;
+        public bool controlEnabled = true;
+
+        Vector2 move;
+        SpriteRenderer spriteRenderer;
+        internal Animator animator;
+
+        public Bounds Bounds => collider2d.bounds;
+
+        void Awake()
         {
-            horizontal = -1.0f;
+            health = GetComponent<Health>();
+            audioSource = GetComponent<AudioSource>();
+            collider2d = GetComponent<Collider2D>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            animator = GetComponent<Animator>();
         }
 
-        else if (Keyboard.current.rightArrowKey.isPressed)
+        // Update is called once per frame
+        protected override void Update()
         {
-            horizontal = 1.0f;
+            if (controlEnabled)
+            {
+                move.x = Input.GetAxis("Horizontal");
+                move.y = Input.GetAxis("Vertical");
+            }
+            else
+            {
+                move.x = 0;
+                move.y = 0;
+            }
+
+            base.Update();
         }
 
-        float vertical = 0.0f;
-        if (Keyboard.current.upArrowKey.isPressed)
+        protected override void ComputeVelocity()
         {
-            vertical = 1.0f;
+
+            if (move.x > 0.01f)
+            {
+                spriteRenderer.flipX = false;
+            }
+            else if (move.x < -0.01f)
+            {
+                spriteRenderer.flipX = true;
+            }
+
+            animator.SetBool("grounded", IsGrounded);
+            animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
+            animator.SetFloat("velocityY", Mathf.Abs(velocity.y) / maxSpeed);
+
+            targetVelocity = move * maxSpeed;
         }
-
-        else if (Keyboard.current.downArrowKey.isPressed)
-        {
-            vertical = -1.0f;
-        }
-
-        Vector2 position = transform.position;
-        position.x = position.x + 0.01f * horizontal;
-        position.y = position.y + 0.01f * vertical;
-        transform.position = position;
-
     }
 }
