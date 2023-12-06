@@ -11,7 +11,7 @@ namespace Platformer.Mechanics
         public AudioClip respawnAudio;
         public AudioClip ouchAudio;
 
-        public Rigidbody2D gift;
+        public GiftInstance gift;
 
         /// <summary>
         /// Max horizontal speed of the player.

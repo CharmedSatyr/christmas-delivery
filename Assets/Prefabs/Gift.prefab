@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3832152260920160249}
   - component: {fileID: 3832152260920160251}
   - component: {fileID: 3832152260920160247}
+  - component: {fileID: 5990883911189329292}
   m_Layer: 0
   m_Name: Gift
   m_TagString: Untagged
@@ -134,3 +135,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5990883911189329292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3832152260920160252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d880ace0c7a2b44f9461cbe7cee561f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deliveryAudio: {fileID: 8300000, guid: bf527d825758e5b4ca7b69f5a02d9a56, type: 3}
