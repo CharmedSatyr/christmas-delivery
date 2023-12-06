@@ -12,6 +12,7 @@ namespace Platformer.Gameplay
     public class GiftEnteredChimneyZone : Simulation.Event<GiftEnteredChimneyZone>
     {
         public GiftInstance gift;
+        public GameObject completedIndicator;
 
         private readonly int giftPointValue = 10;
         public override void Execute()
@@ -22,6 +23,7 @@ namespace Platformer.Gameplay
             ScoreUIController.UpdateScore();
 
             gift.gameObject.SetActive(false);
+            completedIndicator.SetActive(true);
         }
     }
 }

@@ -10,6 +10,9 @@ namespace Platformer.Mechanics
     /// </summary>
     public class ChimneyZone : MonoBehaviour
     {
+        public GameObject completedIndicator;
+        private bool isActive = true;
+
         void OnTriggerEnter2D(Collider2D collider)
         {
             if (!collider.gameObject.TryGetComponent<GiftInstance>(out var gift))
@@ -17,8 +20,22 @@ namespace Platformer.Mechanics
                 return;
             }
 
-            var ev = Schedule<GiftEnteredChimneyZone>();
+            if (!completedIndicator)
+            {
+                Debug.Log("Missing a completed indicator...");
+                return;
+            }
+
+            if (!isActive)
+            {
+                return;
+            }
+
+            GiftEnteredChimneyZone ev = Schedule<GiftEnteredChimneyZone>();
             ev.gift = gift;
+            ev.completedIndicator = completedIndicator;
+
+            isActive = false;
         }
     }
 }
