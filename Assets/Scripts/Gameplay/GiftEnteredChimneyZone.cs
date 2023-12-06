@@ -1,4 +1,5 @@
 using Platformer.Core;
+using Platformer.UI;
 using UnityEngine;
 
 namespace Platformer.Gameplay
@@ -18,6 +19,7 @@ namespace Platformer.Gameplay
             AudioSource.PlayClipAtPoint(gift.deliveryAudio, 0.9f * Camera.main.transform.position + 0.1f * gift.transform.position);
 
             ScoreController.Increment(giftPointValue);
+            ScoreUIController.UpdateScore();
 
             gift.gameObject.SetActive(false);
         }

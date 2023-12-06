@@ -5,7 +5,7 @@ namespace Platformer.UI
 {
     public class ScoreUIController : MonoBehaviour
     {
-        private void Update()
+        public static void UpdateScore()
         {
             if (GameObject.Find("Score").TryGetComponent(out TextMeshProUGUI displayScore))
             {
