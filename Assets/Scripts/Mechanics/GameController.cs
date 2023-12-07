@@ -34,5 +34,15 @@ namespace Platformer.Mechanics
         {
             if (Instance == this) Simulation.Tick();
         }
+
+        public static bool IsGameOver()
+        {
+            if (DeliveryController.AllDeliveriesComplete || Timer.SecondsRemaining == 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

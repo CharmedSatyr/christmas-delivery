@@ -11,11 +11,11 @@ namespace Platformer.Mechanics
     public class ChimneyZone : MonoBehaviour
     {
         public GameObject completedIndicator;
-        private bool isActive = true;
+        public bool isActive { get; private set; } = true;
 
         void OnTriggerEnter2D(Collider2D collider)
         {
-            if (!collider.gameObject.TryGetComponent<GiftInstance>(out var gift))
+            if (!collider.gameObject.TryGetComponent<DeliveryInstance>(out var gift))
             {
                 return;
             }

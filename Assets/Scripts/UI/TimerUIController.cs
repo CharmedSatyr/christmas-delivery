@@ -1,34 +1,37 @@
 using TMPro;
 using UnityEngine;
 
-public class TimerUIController : MonoBehaviour
+namespace Platformer.UI
 {
-    private TextMeshProUGUI displayTimer;
-
-    // Start is called before the first frame update
-    void Start()
+    public class TimerUIController : MonoBehaviour
     {
-        displayTimer = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
-    }
+        private TextMeshProUGUI displayTimer;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!displayTimer)
+        // Start is called before the first frame update
+        void Start()
         {
-            return;
+            displayTimer = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
         }
 
-        if (TimerController.secondsRemaining <= 10)
+        // Update is called once per frame
+        void Update()
         {
-            displayTimer.color = Color.red;
+            if (!displayTimer)
+            {
+                return;
+            }
+
+            if (Timer.SecondsRemaining <= 10)
+            {
+                displayTimer.color = Color.red;
+            }
+
+            float minutes = Mathf.FloorToInt(Timer.SecondsRemaining / 60);
+            float seconds = Mathf.FloorToInt(Timer.SecondsRemaining % 60);
+
+            string formattedTime = string.Format("Time remaining: {0:00}:{1:00}", minutes, seconds);
+
+            displayTimer.SetText($"{formattedTime}");
         }
-
-        float minutes = Mathf.FloorToInt(TimerController.secondsRemaining / 60);
-        float seconds = Mathf.FloorToInt(TimerController.secondsRemaining % 60);
-
-        string formattedTime = string.Format("Time remaining: {0:00}:{1:00}", minutes, seconds);
-
-        displayTimer.SetText($"{formattedTime}");
     }
 }

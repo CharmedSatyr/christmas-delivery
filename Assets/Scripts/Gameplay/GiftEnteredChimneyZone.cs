@@ -1,4 +1,5 @@
 using Platformer.Core;
+using Platformer.Mechanics;
 using Platformer.UI;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace Platformer.Gameplay
     /// <typeparam name="EnemyCollision"></typeparam>
     public class GiftEnteredChimneyZone : Simulation.Event<GiftEnteredChimneyZone>
     {
-        public GiftInstance gift;
+        public DeliveryInstance gift;
         public GameObject completedIndicator;
 
         private readonly int giftPointValue = 10;

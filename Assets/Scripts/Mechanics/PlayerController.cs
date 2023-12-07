@@ -11,7 +11,7 @@ namespace Platformer.Mechanics
         public AudioClip respawnAudio;
         public AudioClip ouchAudio;
 
-        public GiftInstance gift;
+        public DeliveryInstance gift;
 
         /// <summary>
         /// Max horizontal speed of the player.
@@ -43,6 +43,8 @@ namespace Platformer.Mechanics
         protected override void Update()
         {
             base.Update();
+
+            DisableOnGameOver();
 
             if (!controlEnabled)
             {
@@ -81,6 +83,14 @@ namespace Platformer.Mechanics
         private void DropGift()
         {
             Instantiate(gift, transform.position, Quaternion.identity);
+        }
+
+        private void DisableOnGameOver()
+        {
+            if (GameController.IsGameOver())
+            {
+                controlEnabled = false;
+            }
         }
     }
 }
