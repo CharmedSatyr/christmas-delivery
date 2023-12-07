@@ -40,19 +40,28 @@ namespace Platformer.UI
         {
             displayGameOver.SetText(
                 String.Join(Environment.NewLine,
-                "Merry Christmas!",
-                "You Win!",
-                $"Final Score: {ScoreController.Score}")
+                "Level Complete!",
+                $"Score: {ScoreController.Score - ScoreController.CalculateTimeBonus()}",
+                $"Time Bonus: {ScoreController.CalculateTimeBonus()}",
+                $"Final: {ScoreController.Score}")
             );
         }
 
         private void SetPlayerLostText()
         {
+
+            int baseScore = ScoreController.Score + ScoreController.CalculatePenalty();
+            if (baseScore == ScoreController.CalculatePenalty())
+            {
+                baseScore = 0;
+            }
+
             displayGameOver.SetText(
                 String.Join(Environment.NewLine,
-                "Game Over.",
                 "Out of time!",
-                $"Final Score: {ScoreController.Score}")
+                $"Score: {baseScore}",
+                $"Penalty: -{ScoreController.CalculatePenalty()}",
+                $"Final: {ScoreController.Score}")
             );
         }
     }

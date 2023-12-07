@@ -1,3 +1,4 @@
+using Platformer.Mechanics;
 using TMPro;
 using UnityEngine;
 
@@ -5,12 +6,20 @@ namespace Platformer.UI
 {
     public class ScoreUIController : MonoBehaviour
     {
-        public static void UpdateScore()
+        private TextMeshProUGUI displayScore;
+
+        private void Start()
         {
-            if (GameObject.Find("Score").TryGetComponent(out TextMeshProUGUI displayScore))
+            displayScore = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
+        }
+        void LateUpdate()
+        {
+            if (!displayScore)
             {
-                displayScore.SetText($"Score: {ScoreController.Score}");
+                return;
             }
+
+            displayScore.SetText($"Score: {ScoreController.Score}");
         }
     }
 }

@@ -1,18 +1,29 @@
 using UnityEngine;
 
-public class Timer : MonoBehaviour
+namespace Platformer.Mechanics
 {
-    public static float SecondsRemaining { get; private set; } = 30f;
 
-    void Update()
+    public class Timer : MonoBehaviour
     {
-        if (SecondsRemaining > 1)
+        public static float SecondsRemaining { get; private set; } = 30f;
+
+        void Update()
         {
-            SecondsRemaining -= Time.deltaTime;
-        }
-        else
-        {
-            SecondsRemaining = 0;
+            if (GameController.IsGameOver())
+            {
+                return;
+            }
+
+            if (SecondsRemaining > 1)
+            {
+                SecondsRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                // Sets lose conditions
+                SecondsRemaining = 0;
+                ScoreController.HandleGameOver();
+            }
         }
     }
 }

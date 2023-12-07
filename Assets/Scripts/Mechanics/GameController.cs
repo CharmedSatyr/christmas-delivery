@@ -37,7 +37,14 @@ namespace Platformer.Mechanics
 
         public static bool IsGameOver()
         {
-            if (DeliveryController.AllDeliveriesComplete || Timer.SecondsRemaining == 0)
+            // Win
+            if (DeliveryController.AllDeliveriesComplete)
+            {
+                return true;
+            }
+
+            // Loss
+            if (Timer.SecondsRemaining == 0)
             {
                 return true;
             }

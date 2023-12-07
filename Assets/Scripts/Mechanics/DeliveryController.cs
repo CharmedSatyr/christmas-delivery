@@ -5,8 +5,8 @@ namespace Platformer.Mechanics
 {
     public class DeliveryController : MonoBehaviour
     {
-        private ChimneyZone[] chimneys = { };
-        private int chimneyCount = 0;
+        private static ChimneyZone[] chimneys = { };
+        private static int chimneyCount = 0;
 
         // Win condition
         public static bool AllDeliveriesComplete { get; private set; } = false;
@@ -19,7 +19,7 @@ namespace Platformer.Mechanics
             }
         }
 
-        void LateUpdate()
+        void Update()
         {
             AllDeliveriesComplete = AreAllDeliveriesComplete();
         }
@@ -31,9 +31,9 @@ namespace Platformer.Mechanics
             chimneyCount = chimneys.Length;
         }
 
-        private int GetActiveChimneyCount()
+        private static int GetActiveChimneyCount()
         {
-            return chimneys.Where(c => c.isActive).Count();
+            return chimneys.Where(c => c.IsActive).Count();
         }
 
         private bool AreAllDeliveriesComplete()
@@ -45,6 +45,11 @@ namespace Platformer.Mechanics
             }
 
             return GetActiveChimneyCount() == 0;
+        }
+
+        public static int GetIncompleteDeliveriesCount()
+        {
+            return GetActiveChimneyCount();
         }
     }
 }

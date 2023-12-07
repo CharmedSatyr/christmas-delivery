@@ -1,6 +1,5 @@
 using Platformer.Core;
 using Platformer.Mechanics;
-using Platformer.UI;
 using UnityEngine;
 
 namespace Platformer.Gameplay
@@ -16,15 +15,20 @@ namespace Platformer.Gameplay
         public GameObject completedIndicator;
 
         private readonly int giftPointValue = 10;
+
         public override void Execute()
         {
             AudioSource.PlayClipAtPoint(gift.deliveryAudio, 0.9f * Camera.main.transform.position + 0.1f * gift.transform.position);
 
-            ScoreController.Increment(giftPointValue);
-            ScoreUIController.UpdateScore();
+            ScoreController.Modify(giftPointValue);
 
             gift.gameObject.SetActive(false);
             completedIndicator.SetActive(true);
+
+            if (GameController.IsGameOver())
+            {
+                ScoreController.HandleGameOver();
+            }
         }
     }
 }
