@@ -41,9 +41,10 @@ namespace Platformer.UI
             displayGameOver.SetText(
                 String.Join(Environment.NewLine,
                 "Level Complete!",
-                $"Score: {ScoreController.Score - ScoreController.CalculateTimeBonus()}",
+                //$"Score: {ScoreController.Score - ScoreController.CalculateTimeBonus()}",
+                $"Score: {ScoreController.Score}",
                 $"Time Bonus: {ScoreController.CalculateTimeBonus()}",
-                $"Final: {ScoreController.Score}")
+                $"Final: {ScoreController.Score + ScoreController.CalculateTimeBonus()}")
             );
         }
 

@@ -31,11 +31,14 @@ namespace Platformer.Mechanics
 
         public static int CalculatePenalty()
         {
+            Debug.Log("Incomplete Deliveries" + DeliveryController.GetIncompleteDeliveriesCount());
             return DeliveryController.GetIncompleteDeliveriesCount() * PenaltyPerIncompleteDelivery;
         }
 
         public static void HandleGameOver()
         {
+            Debug.Log("HandleGameOver");
+            
             if (DeliveryController.AllDeliveriesComplete)
             {
                 Modify(CalculateTimeBonus());
