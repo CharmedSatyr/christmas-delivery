@@ -26,7 +26,7 @@ namespace Platformer.UI
                 return;
             }
 
-            if (DeliveryController.AllDeliveriesComplete)
+            if (DeliveryController.AllDeliveriesComplete || GameController.PlayerEnteredVictoryZone)
             {
                 SetPlayerVictoryText();
                 return;
@@ -41,29 +41,21 @@ namespace Platformer.UI
             displayGameOver.SetText(
                 String.Join(Environment.NewLine,
                 "Level Complete!",
-                //$"Score: {ScoreController.Score - ScoreController.CalculateTimeBonus()}",
                 $"Score: {ScoreController.Score}",
+                $"Penalty: {-1 * ScoreController.CalculatePenalty()}",
                 $"Time Bonus: {ScoreController.CalculateTimeBonus()}",
-                //$"Final: {ScoreController.Score}")
-                $"Final: {ScoreController.Score + ScoreController.CalculateTimeBonus()}")
+                $"Final: {ScoreController.Score + ScoreController.CalculateTimeBonus() - ScoreController.CalculatePenalty()}")
             );
         }
 
         private void SetPlayerLostText()
         {
-
-            int baseScore = ScoreController.Score + ScoreController.CalculatePenalty();
-            if (baseScore == ScoreController.CalculatePenalty())
-            {
-                baseScore = 0;
-            }
-
             displayGameOver.SetText(
                 String.Join(Environment.NewLine,
                 "Out of time!",
-                $"Score: {baseScore}",
-                $"Penalty: -{ScoreController.CalculatePenalty()}",
-                $"Final: {ScoreController.Score}")
+                $"Score: {ScoreController.Score}",
+                $"Penalty: {-1 * ScoreController.CalculatePenalty()}",
+                $"Final: {ScoreController.Score - ScoreController.CalculatePenalty()}")
             );
         }
     }

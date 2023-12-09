@@ -23,11 +23,6 @@ namespace Platformer.Gameplay
 
             gift.gameObject.SetActive(false);
             completedIndicator.SetActive(true);
-
-            if (GameController.IsGameOver())
-            {
-                ScoreController.HandleGameOver();
-            }
         }
     }
 }

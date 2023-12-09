@@ -9,7 +9,7 @@ namespace Platformer.Mechanics
         public static readonly int DeliveryPointValue = 25;
         public static readonly int TokenPointValue = 10;
         private static readonly int BonusPerSecond = 1;
-        private static readonly int PenaltyPerIncompleteDelivery = 1;
+        private static readonly int PenaltyPerIncompleteDelivery = 20;
 
         public static void Modify(int value)
         {
@@ -33,23 +33,7 @@ namespace Platformer.Mechanics
 
         public static int CalculatePenalty()
         {
-            Debug.Log("Incomplete Deliveries" + DeliveryController.GetIncompleteDeliveriesCount());
             return DeliveryController.GetIncompleteDeliveriesCount() * PenaltyPerIncompleteDelivery;
-        }
-
-        public static void HandleGameOver()
-        {
-            Debug.Log("HandleGameOver");
-
-            if (DeliveryController.AllDeliveriesComplete)
-            {
-                Modify(CalculateTimeBonus());
-                return;
-            }
-
-            int penalty = -1 * CalculatePenalty();
-            Debug.Log("penalty " + penalty);
-            Modify(penalty);
         }
     }
 }

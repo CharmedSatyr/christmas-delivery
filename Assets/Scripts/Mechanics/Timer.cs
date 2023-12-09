@@ -27,7 +27,6 @@ namespace Platformer.Mechanics
             {
                 // Sets lose conditions
                 SecondsRemaining = 0;
-                ScoreController.HandleGameOver();
             }
         }
     }

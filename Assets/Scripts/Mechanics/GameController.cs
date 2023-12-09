@@ -20,6 +20,8 @@ namespace Platformer.Mechanics
         //conveniently configured inside the inspector.
         public PlatformerModel model = Simulation.GetModel<PlatformerModel>();
 
+        public static bool PlayerEnteredVictoryZone = false;
+
         void OnEnable()
         {
             Instance = this;
@@ -38,7 +40,7 @@ namespace Platformer.Mechanics
         public static bool IsGameOver()
         {
             // Win
-            if (DeliveryController.AllDeliveriesComplete)
+            if (DeliveryController.AllDeliveriesComplete || PlayerEnteredVictoryZone)
             {
                 return true;
             }
