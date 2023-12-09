@@ -44,6 +44,7 @@ namespace Platformer.UI
                 //$"Score: {ScoreController.Score - ScoreController.CalculateTimeBonus()}",
                 $"Score: {ScoreController.Score}",
                 $"Time Bonus: {ScoreController.CalculateTimeBonus()}",
+                //$"Final: {ScoreController.Score}")
                 $"Final: {ScoreController.Score + ScoreController.CalculateTimeBonus()}")
             );
         }

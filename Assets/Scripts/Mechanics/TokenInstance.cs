@@ -16,6 +16,7 @@ namespace Platformer.Mechanics
         public AudioClip tokenCollectAudio;
         [Tooltip("If true, animation will start at a random position in the sequence.")]
         public bool randomAnimationStartTime = false;
+
         [Tooltip("List of frames that make up the animation.")]
         public Sprite[] idleAnimation, collectedAnimation;
 
@@ -33,9 +34,43 @@ namespace Platformer.Mechanics
         void Awake()
         {
             _renderer = GetComponent<SpriteRenderer>();
-            if (randomAnimationStartTime)
-                frame = Random.Range(0, sprites.Length);
-            sprites = idleAnimation;
+
+            if (this.tag == "Candies")
+            {
+                //Candies are only a single frame, so there's no animation
+                //The idleAnimation[] is full of single frame of a single kind of candy
+                
+                
+                Debug.Log("candy found");
+                Debug.Log("sprites Length:" + sprites.Length);
+                Debug.Log("idleAnimation Length: " + idleAnimation.Length);
+
+                //if(randomAnimationStartTime)
+                    
+                frame = Random.Range(0, idleAnimation.Length);
+
+                Debug.Log("random candy index: " + frame);
+
+                for (int x = 0; x < idleAnimation.Length; x++)
+                {
+                    if (x != frame)
+                    {
+                        idleAnimation[x] = idleAnimation[frame];
+                    }
+                }
+
+                sprites = idleAnimation;
+
+            } else
+            {
+                //this is the default template code
+                if (randomAnimationStartTime)
+                    frame = Random.Range(0, sprites.Length);
+
+                sprites = idleAnimation;
+            }
+
+           
         }
 
         void OnTriggerEnter2D(Collider2D other)
@@ -45,6 +80,8 @@ namespace Platformer.Mechanics
             if (player != null) OnPlayerEnter(player);
         }
 
+
+        //When the player collects the item
         void OnPlayerEnter(PlayerController player)
         {
             if (collected) return;
