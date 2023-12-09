@@ -12,6 +12,7 @@ namespace Platformer.Mechanics
         public AudioClip ouchAudio;
 
         public DeliveryInstance gift;
+        public Vector3 giftOffset;
 
         /// <summary>
         /// Max horizontal speed of the player.
@@ -82,7 +83,7 @@ namespace Platformer.Mechanics
 
         private void DropGift()
         {
-            Instantiate(gift, transform.position, Quaternion.identity);
+            Instantiate(gift, transform.position + giftOffset, Quaternion.identity);
         }
 
         private void DisableOnGameOver()
