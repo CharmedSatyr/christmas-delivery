@@ -43,27 +43,27 @@ namespace Platformer.Mechanics
             else
             {
                 Debug.Log("TokenInstance::Found gameController" + _gameController.name);
-                
+
                 Component[] components = _gameController.GetComponents(typeof(Component));
                 for (int i = 0; i < components.Length; i++)
                 {
                     Debug.Log(components[i].ToString());
                 }
-                
+
             }
 
             if (this.tag == "Candies")
             {
                 //Candies are only a single frame, so there's no animation
                 //The idleAnimation[] is full of single frame of a single kind of candy
-                
-                
+
+
                 Debug.Log("candy found");
                 Debug.Log("sprites Length:" + sprites.Length);
                 Debug.Log("idleAnimation Length: " + idleAnimation.Length);
 
                 //if(randomAnimationStartTime)
-                    
+
                 frame = Random.Range(0, idleAnimation.Length);
 
                 Debug.Log("random candy index: " + frame);
@@ -78,7 +78,8 @@ namespace Platformer.Mechanics
 
                 sprites = idleAnimation;
 
-            } else
+            }
+            else
             {
                 //this is the default template code
                 if (randomAnimationStartTime)
@@ -87,18 +88,18 @@ namespace Platformer.Mechanics
                 sprites = idleAnimation;
             }
 
-           
+
         }
 
-        void OnTriggerEnter2D(Collider2D other)
+        void OnTriggerEnter2D(Collider2D collider)
         {
-
-
-            _gameController.GetComponent<Platformer.Mechanics.Timer>().AddTime();
+            ScoreController.Modify(ScoreController.TokenPointValue);
 
             //only exectue OnPlayerEnter if the player collides with this token.
-            var player = other.gameObject.GetComponent<PlayerController>();
-            if (player != null) OnPlayerEnter(player);
+            if (collider.gameObject.TryGetComponent<PlayerController>(out var player))
+            {
+                OnPlayerEnter(player);
+            }
         }
 
 
@@ -110,16 +111,14 @@ namespace Platformer.Mechanics
             frame = 0;
             sprites = collectedAnimation;
             if (controller != null)
+            {
                 collected = true;
-
-           
+            }
 
             //send an event into the gameplay system to perform some behaviour.
             var ev = Schedule<PlayerTokenCollision>();
             ev.token = this;
             ev.player = player;
-
-            
         }
     }
 }

@@ -14,13 +14,11 @@ namespace Platformer.Gameplay
         public DeliveryInstance gift;
         public GameObject completedIndicator;
 
-        private readonly int giftPointValue = 10;
-
         public override void Execute()
         {
             AudioSource.PlayClipAtPoint(gift.deliveryAudio, 0.9f * Camera.main.transform.position + 0.1f * gift.transform.position);
 
-            ScoreController.Modify(giftPointValue);
+            ScoreController.Modify(ScoreController.DeliveryPointValue);
 
             gift.gameObject.SetActive(false);
             completedIndicator.SetActive(true);
