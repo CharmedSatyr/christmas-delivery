@@ -19,6 +19,7 @@ namespace Platformer.Gameplay
             AudioSource.PlayClipAtPoint(gift.deliveryAudio, 0.9f * Camera.main.transform.position + 0.1f * gift.transform.position);
 
             ScoreController.Modify(ScoreController.DeliveryPointValue);
+            Timer.AddTime(1f);
 
             gift.gameObject.SetActive(false);
             completedIndicator.SetActive(true);

@@ -7,7 +7,7 @@ namespace Platformer.Mechanics
     {
         public static float SecondsRemaining { get; set; } = 90f;
 
-        public void AddTime(float seconds = 1.0f)
+        public static void AddTime(float seconds = 1.0f)
         {
             SecondsRemaining += seconds;
         }
