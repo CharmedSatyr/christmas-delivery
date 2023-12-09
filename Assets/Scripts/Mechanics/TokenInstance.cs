@@ -23,6 +23,7 @@ namespace Platformer.Mechanics
         internal Sprite[] sprites = new Sprite[0];
 
         internal SpriteRenderer _renderer;
+        internal GameObject _gameController;
 
         //unique index which is assigned by the TokenController in a scene.
         internal int tokenIndex = -1;
@@ -34,6 +35,22 @@ namespace Platformer.Mechanics
         void Awake()
         {
             _renderer = GetComponent<SpriteRenderer>();
+            _gameController = GameObject.Find("GameController");
+            if (_gameController == null)
+            {
+                Debug.Log("TokenInstance::Unable to find GameController");
+            }
+            else
+            {
+                Debug.Log("TokenInstance::Found gameController" + _gameController.name);
+                
+                Component[] components = _gameController.GetComponents(typeof(Component));
+                for (int i = 0; i < components.Length; i++)
+                {
+                    Debug.Log(components[i].ToString());
+                }
+                
+            }
 
             if (this.tag == "Candies")
             {
@@ -75,6 +92,10 @@ namespace Platformer.Mechanics
 
         void OnTriggerEnter2D(Collider2D other)
         {
+
+
+            _gameController.GetComponent<Platformer.Mechanics.Timer>().AddTime();
+
             //only exectue OnPlayerEnter if the player collides with this token.
             var player = other.gameObject.GetComponent<PlayerController>();
             if (player != null) OnPlayerEnter(player);
@@ -90,10 +111,15 @@ namespace Platformer.Mechanics
             sprites = collectedAnimation;
             if (controller != null)
                 collected = true;
+
+           
+
             //send an event into the gameplay system to perform some behaviour.
             var ev = Schedule<PlayerTokenCollision>();
             ev.token = this;
             ev.player = player;
+
+            
         }
     }
 }

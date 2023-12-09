@@ -5,7 +5,12 @@ namespace Platformer.Mechanics
 
     public class Timer : MonoBehaviour
     {
-        public static float SecondsRemaining = 90f;
+        public static float SecondsRemaining { get;  set; } = 30f;
+
+        public void AddTime()
+        {
+            SecondsRemaining += 1.0f;
+        }
 
         void Update()
         {
