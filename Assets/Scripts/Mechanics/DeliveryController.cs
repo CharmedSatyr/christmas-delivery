@@ -51,5 +51,10 @@ namespace Platformer.Mechanics
         {
             return GetActiveChimneyCount();
         }
+
+        public static int GetCompletedDeliveriesCount()
+        {
+            return chimneyCount - GetIncompleteDeliveriesCount();
+        }
     }
 }

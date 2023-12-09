@@ -6,10 +6,10 @@ namespace Platformer.Mechanics
     {
         public static int Score { get; private set; } = 0;
 
-        public static readonly int DeliveryPointValue = 25;
+        public static readonly int DeliveryPointValue = 50;
+        private static readonly int PenaltyPerIncompleteDelivery = 100;
         public static readonly int TokenPointValue = 10;
         private static readonly int BonusPerSecond = 1;
-        private static readonly int PenaltyPerIncompleteDelivery = 20;
 
         public static void Modify(int value)
         {
