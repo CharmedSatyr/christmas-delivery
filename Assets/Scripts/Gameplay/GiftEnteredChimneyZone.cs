@@ -16,7 +16,7 @@ namespace Platformer.Gameplay
 
         public override void Execute()
         {
-            AudioSource.PlayClipAtPoint(gift.deliveryAudio, 0.9f * Camera.main.transform.position + 0.1f * gift.transform.position);
+            AudioSource.PlayClipAtPoint(gift.deliveryAudio, gift.transform.position);
 
             ScoreController.Modify(ScoreController.DeliveryPointValue);
             Timer.AddTime(2f);
