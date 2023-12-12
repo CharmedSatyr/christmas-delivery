@@ -57,36 +57,40 @@ namespace Platformer.UI
 
         private void SetPlayerVictoryText()
         {
-            int finalScore = ScoreController.Score + ScoreController.CalculateTimeBonus() - ScoreController.CalculatePenalty();
-            finalScore = finalScore > 0 ? finalScore : 0;
+            int finalScore = ScoreController.CalculateFinalScore();
+
+            bool isHighScore = finalScore >= ScoreController.HighScore;
+            string highScoreText = isHighScore ? "NEW HIGH SCORE" : "";
 
             gameOverUI.SetText(
                     String.Join(Environment.NewLine,
                     "Level Complete!",
                     $"Gifts Delivered: {DeliveryController.GetCompletedDeliveriesCount()}",
                     $"Deliveries Missed: {DeliveryController.GetIncompleteDeliveriesCount()}",
-                    "",
+                    Environment.NewLine,
                     $"Score: {ScoreController.Score}",
                     $"Penalty: {-1 * ScoreController.CalculatePenalty()}",
                     $"Time Bonus: {ScoreController.CalculateTimeBonus()}",
-                    $"Final: {finalScore}")
+                    $"Final: {finalScore} {highScoreText}")
                 );
         }
 
         private void SetPlayerLostText()
         {
-            int finalScore = ScoreController.Score - ScoreController.CalculatePenalty();
-            finalScore = finalScore > 0 ? finalScore : 0;
+            int finalScore = ScoreController.CalculateFinalScore();
+
+            bool isHighScore = finalScore >= ScoreController.HighScore;
+            string highScoreText = isHighScore ? "NEW HIGH SCORE" : "";
 
             gameOverUI.SetText(
                 String.Join(Environment.NewLine,
                 "Out of time!",
                 $"Gifts Delivered: {DeliveryController.GetCompletedDeliveriesCount()}",
                 $"Deliveries Missed: {DeliveryController.GetIncompleteDeliveriesCount()}",
-                "",
+                Environment.NewLine,
                 $"Score: {ScoreController.Score}",
                 $"Penalty: {-1 * ScoreController.CalculatePenalty()}",
-                $"Final: {finalScore}")
+                $"Final: {finalScore} {highScoreText}")
             );
         }
 

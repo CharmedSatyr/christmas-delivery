@@ -6,20 +6,24 @@ namespace Platformer.UI
 {
     public class ScoreUIController : MonoBehaviour
     {
-        private TextMeshProUGUI displayScore;
+        private TextMeshProUGUI score;
+        private TextMeshProUGUI highScore;
 
         private void Start()
         {
-            displayScore = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
+            score = GameObject.Find("Score").GetComponent<TextMeshProUGUI>();
+            highScore = GameObject.Find("HighScore").GetComponent<TextMeshProUGUI>();
         }
+
         void LateUpdate()
         {
-            if (!displayScore)
+            if (!score || !highScore)
             {
                 return;
             }
 
-            displayScore.SetText($"Score: {ScoreController.Score}");
+            score.SetText($"Score: {ScoreController.Score}");
+            highScore.SetText($"High Score: {ScoreController.HighScore}");
         }
     }
 }

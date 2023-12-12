@@ -6,13 +6,13 @@ namespace Platformer.Mechanics
     /// <summary>
     /// A utility class to load a scene.
     /// </summary>
-    public class StartScene : MonoBehaviour
+    public class LoadScene : MonoBehaviour
     {
-        public string LevelName = "SnowyScene";
+        public string SceneName = "SnowyScene";
 
-        public void LoadLevel()
+        public void Load()
         {
-            SceneManager.LoadScene(LevelName);
+            SceneManager.LoadScene(SceneName);
         }
     }
 }

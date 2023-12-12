@@ -57,11 +57,12 @@ namespace Platformer.Mechanics
 
         public static void ResetGame()
         {
+            ScoreController.UpdateHighScore();
             ScoreController.Reset();
             Timer.Reset();
             GameOverUIController.Reset();
             PlayerEnteredVictoryZone = false;
-            Instance.GetComponent<StartScene>().LoadLevel();
+            Instance.GetComponent<LoadScene>().Load();
         }
     }
 }
