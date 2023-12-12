@@ -4,7 +4,7 @@ namespace Platformer.Mechanics
 {
     public class Timer : MonoBehaviour
     {
-        private static readonly float startingSeconds = 60f;
+        private static readonly float startingSeconds = 5f;
         public static float SecondsRemaining { get; set; }
 
         public float almostUpTime = 10f;  // Time (in seconds) when the almost-up sound should play
@@ -15,7 +15,7 @@ namespace Platformer.Mechanics
         private static bool almostUpSoundPlayed = false;
         private static bool timeUpSoundPlayed = false;
 
-        public static float raceCountDown = 3;
+        public static float RaceCountDown { get; private set; } = 3;
 
         void Start()
         {
@@ -76,15 +76,14 @@ namespace Platformer.Mechanics
             SecondsRemaining = startingSeconds;
             almostUpSoundPlayed = false;
             timeUpSoundPlayed = false;
-            raceCountDown = 3;
+            RaceCountDown = 3;
         }
 
         private static void CountDownToStart()
         {
-            if (raceCountDown > -1)
+            if (RaceCountDown > -1)
             {
-                Debug.Log(Time.deltaTime);
-                raceCountDown -= Time.deltaTime;
+                RaceCountDown -= Time.deltaTime;
             }
         }
     }

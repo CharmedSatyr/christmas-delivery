@@ -45,13 +45,13 @@ namespace Platformer.UI
             // Set the formatted time to the TextMeshProUGUI component
             displayTimer.SetText($"{formattedTime}");
 
-            float countdownSeconds = Mathf.CeilToInt(Timer.raceCountDown);
+            float countdownSeconds = Mathf.CeilToInt(Timer.RaceCountDown);
 
-            if (Timer.raceCountDown > 0)
+            if (Timer.RaceCountDown > 0)
             {
                 countdownTimer.SetText($"{countdownSeconds}");
             }
-            else if (Timer.raceCountDown >= -1)
+            else if (Timer.RaceCountDown >= -1)
             {
                 countdownTimer.SetText("START");
             }

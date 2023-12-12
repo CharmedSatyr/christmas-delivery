@@ -45,7 +45,7 @@ namespace Platformer.Mechanics
 
         public static bool DidGameStart()
         {
-            if (Timer.raceCountDown <= 0)
+            if (Timer.RaceCountDown <= 0)
             {
                 return true;
             }
