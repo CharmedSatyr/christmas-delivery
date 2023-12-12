@@ -4,18 +4,20 @@ namespace Platformer.Mechanics
 {
     public class Timer : MonoBehaviour
     {
-        public static float SecondsRemaining { get; set; } = 60f;
+        private static readonly float startingSeconds = 60f;
+        public static float SecondsRemaining { get; set; }
 
         public float almostUpTime = 10f;  // Time (in seconds) when the almost-up sound should play
         public AudioClip almostUpSound;   // Sound to play when time is almost up
         public AudioClip timeUpSound;      // Sound to play when time is up
 
         private AudioSource audioSource;
-        private bool almostUpSoundPlayed = false;
-        private bool timeUpSoundPlayed = false;
+        private static bool almostUpSoundPlayed = false;
+        private static bool timeUpSoundPlayed = false;
 
         void Start()
         {
+            SecondsRemaining = startingSeconds;
             audioSource = GetComponent<AudioSource>();
         }
 
@@ -53,6 +55,13 @@ namespace Platformer.Mechanics
                     timeUpSoundPlayed = true;
                 }
             }
+        }
+
+        public static void Reset()
+        {
+            SecondsRemaining = startingSeconds;
+            almostUpSoundPlayed = false;
+            timeUpSoundPlayed = false;
         }
     }
 }

@@ -42,12 +42,10 @@ namespace Platformer.Mechanics
             }
             else
             {
-                Debug.Log("TokenInstance::Found gameController" + _gameController.name);
-
                 Component[] components = _gameController.GetComponents(typeof(Component));
                 for (int i = 0; i < components.Length; i++)
                 {
-                    Debug.Log(components[i].ToString());
+                    // Debug.Log(components[i].ToString());
                 }
 
             }
@@ -58,15 +56,9 @@ namespace Platformer.Mechanics
                 //The idleAnimation[] is full of single frame of a single kind of candy
 
 
-                Debug.Log("candy found");
-                Debug.Log("sprites Length:" + sprites.Length);
-                Debug.Log("idleAnimation Length: " + idleAnimation.Length);
-
                 //if(randomAnimationStartTime)
 
                 frame = Random.Range(0, idleAnimation.Length);
-
-                Debug.Log("random candy index: " + frame);
 
                 for (int x = 0; x < idleAnimation.Length; x++)
                 {

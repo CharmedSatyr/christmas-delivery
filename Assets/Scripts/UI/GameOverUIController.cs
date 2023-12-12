@@ -8,22 +8,25 @@ namespace Platformer.UI
 {
     public class GameOverUIController : MonoBehaviour
     {
-        private bool gameOverUIEnabled = false;
+        private static bool gameOverUIEnabled = false;
 
-        private TextMeshProUGUI gameOverUI;
-        private Button retryButton;
+        private static TextMeshProUGUI gameOverUI;
+        private static Button retryButton;
 
         void Awake()
         {
             gameOverUI = GameObject.Find("GameOver").GetComponent<TextMeshProUGUI>();
             retryButton = gameOverUI.GetComponentInChildren<Button>();
+        }
 
+        void Start()
+        {
             retryButton.gameObject.SetActive(false);
         }
 
         private void Update()
         {
-            if (!gameOverUI)
+            if (!gameOverUI || !retryButton)
             {
                 return;
             }
@@ -90,6 +93,13 @@ namespace Platformer.UI
         private void EnablePlayAgainButton()
         {
             retryButton.gameObject.SetActive(true);
+        }
+
+        public static void Reset()
+        {
+            retryButton.gameObject.SetActive(false);
+            gameOverUIEnabled = false;
+            gameOverUI.SetText("");
         }
     }
 }

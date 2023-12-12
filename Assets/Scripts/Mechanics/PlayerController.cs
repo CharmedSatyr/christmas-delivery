@@ -93,5 +93,10 @@ namespace Platformer.Mechanics
                 controlEnabled = false;
             }
         }
+
+        public void Enable()
+        {
+            controlEnabled = true;
+        }
     }
 }

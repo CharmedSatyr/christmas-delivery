@@ -1,5 +1,6 @@
 using Platformer.Core;
 using Platformer.Model;
+using Platformer.UI;
 using UnityEngine;
 
 namespace Platformer.Mechanics
@@ -52,6 +53,15 @@ namespace Platformer.Mechanics
             }
 
             return false;
+        }
+
+        public static void ResetGame()
+        {
+            ScoreController.Reset();
+            Timer.Reset();
+            GameOverUIController.Reset();
+            PlayerEnteredVictoryZone = false;
+            Instance.GetComponent<StartScene>().LoadLevel();
         }
     }
 }
