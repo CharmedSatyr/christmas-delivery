@@ -15,6 +15,8 @@ namespace Platformer.Mechanics
         private static bool almostUpSoundPlayed = false;
         private static bool timeUpSoundPlayed = false;
 
+        public static float raceCountDown = 3;
+
         void Start()
         {
             SecondsRemaining = startingSeconds;
@@ -27,6 +29,18 @@ namespace Platformer.Mechanics
         }
 
         void Update()
+        {
+            CountDownToStart();
+
+            if (!GameController.DidGameStart())
+            {
+                return;
+            }
+
+            UpdateRaceTimer();
+        }
+
+        private void UpdateRaceTimer()
         {
             if (GameController.IsGameOver())
             {
@@ -62,6 +76,16 @@ namespace Platformer.Mechanics
             SecondsRemaining = startingSeconds;
             almostUpSoundPlayed = false;
             timeUpSoundPlayed = false;
+            raceCountDown = 3;
+        }
+
+        private static void CountDownToStart()
+        {
+            if (raceCountDown > -1)
+            {
+                Debug.Log(Time.deltaTime);
+                raceCountDown -= Time.deltaTime;
+            }
         }
     }
 }

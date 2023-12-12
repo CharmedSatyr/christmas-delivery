@@ -45,7 +45,7 @@ namespace Platformer.Mechanics
         {
             base.Update();
 
-            DisableOnGameOver();
+            HandleEnabled();
 
             if (!controlEnabled)
             {
@@ -86,16 +86,20 @@ namespace Platformer.Mechanics
             Instantiate(gift, transform.position + giftOffset, Quaternion.identity);
         }
 
-        private void DisableOnGameOver()
+        public void HandleEnabled()
         {
+            if (!GameController.DidGameStart())
+            {
+                controlEnabled = false;
+                return;
+            }
+
             if (GameController.IsGameOver())
             {
                 controlEnabled = false;
+                return;
             }
-        }
 
-        public void Enable()
-        {
             controlEnabled = true;
         }
     }

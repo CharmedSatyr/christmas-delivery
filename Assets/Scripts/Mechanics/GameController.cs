@@ -35,7 +35,22 @@ namespace Platformer.Mechanics
 
         void Update()
         {
-            if (Instance == this) Simulation.Tick();
+            if (Instance != this)
+            {
+                return;
+            }
+
+            Simulation.Tick();
+        }
+
+        public static bool DidGameStart()
+        {
+            if (Timer.raceCountDown <= 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public static bool IsGameOver()

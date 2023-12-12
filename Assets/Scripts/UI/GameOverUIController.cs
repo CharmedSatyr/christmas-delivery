@@ -59,7 +59,7 @@ namespace Platformer.UI
         {
             int finalScore = ScoreController.CalculateFinalScore();
 
-            bool isHighScore = finalScore >= ScoreController.HighScore;
+            bool isHighScore = finalScore > ScoreController.HighScore;
             string highScoreText = isHighScore ? "NEW HIGH SCORE" : "";
 
             gameOverUI.SetText(
@@ -79,7 +79,7 @@ namespace Platformer.UI
         {
             int finalScore = ScoreController.CalculateFinalScore();
 
-            bool isHighScore = finalScore >= ScoreController.HighScore;
+            bool isHighScore = finalScore > ScoreController.HighScore;
             string highScoreText = isHighScore ? "NEW HIGH SCORE" : "";
 
             gameOverUI.SetText(
