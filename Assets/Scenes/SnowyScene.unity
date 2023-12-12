@@ -10422,7 +10422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b4d7b0f40228342b271a504c69dd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  almostUpTime: 21
+  almostUpTime: 10
   almostUpSound: {fileID: 8300000, guid: 704ab0d2ca8b6b44e923d592eb42f971, type: 3}
   timeUpSound: {fileID: 8300000, guid: 74fdb0df83fdaa54f9c90d88684380d4, type: 3}
 --- !u!82 &1807759179
@@ -10911,7 +10911,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846024791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0812793, y: -0.78552026, z: -9}
+  m_LocalPosition: {x: -1.435, y: -0.601, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
