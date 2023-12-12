@@ -2,21 +2,28 @@ using Platformer.Mechanics;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Platformer.UI
 {
     public class GameOverUIController : MonoBehaviour
     {
-        private TextMeshProUGUI displayGameOver;
+        private bool gameOverUIEnabled = false;
 
-        private void Start()
+        private TextMeshProUGUI gameOverUI;
+        private Button retryButton;
+
+        void Awake()
         {
-            displayGameOver = GameObject.Find("GameOver").GetComponent<TextMeshProUGUI>();
+            gameOverUI = GameObject.Find("GameOver").GetComponent<TextMeshProUGUI>();
+            retryButton = gameOverUI.GetComponentInChildren<Button>();
+
+            retryButton.gameObject.SetActive(false);
         }
 
         private void Update()
         {
-            if (!displayGameOver)
+            if (!gameOverUI)
             {
                 return;
             }
@@ -25,6 +32,15 @@ namespace Platformer.UI
             {
                 return;
             }
+
+            if (gameOverUIEnabled)
+            {
+                return;
+            }
+
+            gameOverUIEnabled = true;
+
+            EnablePlayAgainButton();
 
             if (DeliveryController.AllDeliveriesComplete || GameController.PlayerEnteredVictoryZone)
             {
@@ -41,7 +57,7 @@ namespace Platformer.UI
             int finalScore = ScoreController.Score + ScoreController.CalculateTimeBonus() - ScoreController.CalculatePenalty();
             finalScore = finalScore > 0 ? finalScore : 0;
 
-            displayGameOver.SetText(
+            gameOverUI.SetText(
                     String.Join(Environment.NewLine,
                     "Level Complete!",
                     $"Gifts Delivered: {DeliveryController.GetCompletedDeliveriesCount()}",
@@ -59,7 +75,7 @@ namespace Platformer.UI
             int finalScore = ScoreController.Score - ScoreController.CalculatePenalty();
             finalScore = finalScore > 0 ? finalScore : 0;
 
-            displayGameOver.SetText(
+            gameOverUI.SetText(
                 String.Join(Environment.NewLine,
                 "Out of time!",
                 $"Gifts Delivered: {DeliveryController.GetCompletedDeliveriesCount()}",
@@ -69,6 +85,11 @@ namespace Platformer.UI
                 $"Penalty: {-1 * ScoreController.CalculatePenalty()}",
                 $"Final: {finalScore}")
             );
+        }
+
+        private void EnablePlayAgainButton()
+        {
+            retryButton.gameObject.SetActive(true);
         }
     }
 }

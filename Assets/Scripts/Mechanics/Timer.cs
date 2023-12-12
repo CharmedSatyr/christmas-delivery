@@ -31,7 +31,7 @@ namespace Platformer.Mechanics
                 return;
             }
 
-            if (SecondsRemaining > 0)
+            if (SecondsRemaining > 1)
             {
                 SecondsRemaining -= Time.deltaTime;
 
