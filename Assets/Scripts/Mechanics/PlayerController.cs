@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+
 
 namespace Platformer.Mechanics
 {
@@ -25,6 +27,7 @@ namespace Platformer.Mechanics
         public AudioSource audioSource;
         public Health health;
         public bool controlEnabled = true;
+        private bool deliveriesEnabled = true;
 
         Vector2 move;
         SpriteRenderer spriteRenderer;
@@ -81,9 +84,29 @@ namespace Platformer.Mechanics
             targetVelocity = move * maxSpeed;
         }
 
+        /// <summary>
+        ///  Instantiate a prefab gift object that will drop from the player sprite at the set offset.
+        ///  Deliveries are limited to 1 / second.
+        /// </summary>
         private void DropGift()
         {
+            if (!deliveriesEnabled)
+            {
+                return;
+            }
+
+
             Instantiate(gift, transform.position + giftOffset, Quaternion.identity);
+            deliveriesEnabled = false;
+
+            StartCoroutine(Cooldown());
+        }
+
+        private IEnumerator Cooldown()
+        {
+            yield return new WaitForSeconds(1);
+
+            deliveriesEnabled = true;
         }
 
         public void HandleEnabled()
