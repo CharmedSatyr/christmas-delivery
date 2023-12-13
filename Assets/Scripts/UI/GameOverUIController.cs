@@ -57,28 +57,19 @@ namespace Platformer.UI
 
         private void SetPlayerVictoryText()
         {
-            int finalScore = ScoreController.CalculateFinalScore();
-
-            if (finalScore > ScoreController.HighScore)
-            {
-                highScore.gameObject.SetActive(true);
-            }
-
             result.SetText("Level Complete!");
 
-            details.SetText(
-                    string.Join(Environment.NewLine,
-                    $"Gifts Delivered: {DeliveryController.GetCompletedDeliveriesCount()}",
-                    $"Deliveries Missed: {DeliveryController.GetIncompleteDeliveriesCount()}",
-                    string.Empty,
-                    $"Score: {ScoreController.Score}",
-                    $"Penalty: {-1 * ScoreController.CalculatePenalty()}",
-                    $"Time Bonus: {ScoreController.CalculateTimeBonus()}",
-                    $"Final: {finalScore}")
-                );
+            BuildDetails();
         }
 
         private void SetPlayerLostText()
+        {
+            result.SetText("Out of Time!");
+
+            BuildDetails();
+        }
+
+        private void BuildDetails()
         {
             int finalScore = ScoreController.CalculateFinalScore();
 
@@ -87,8 +78,6 @@ namespace Platformer.UI
                 highScore.gameObject.SetActive(true);
             }
 
-            result.SetText("Out of Time!");
-
             details.SetText(
                 string.Join(Environment.NewLine,
                 $"Gifts Delivered: {DeliveryController.GetCompletedDeliveriesCount()}",
@@ -96,6 +85,7 @@ namespace Platformer.UI
                 string.Empty,
                 $"Score: {ScoreController.Score}",
                 $"Penalty: {-1 * ScoreController.CalculatePenalty()}",
+                $"Time Bonus: {ScoreController.CalculateTimeBonus()}",
                 $"Final: {finalScore}")
             );
         }
@@ -107,10 +97,10 @@ namespace Platformer.UI
 
         public void Reset()
         {
-            retryButton.gameObject.SetActive(false);
             result.SetText("");
             details.SetText("");
             highScore.gameObject.SetActive(false);
+            retryButton.gameObject.SetActive(false);
         }
     }
 }
