@@ -75,7 +75,7 @@ namespace Platformer.Mechanics
             ScoreController.UpdateHighScore();
             ScoreController.Reset();
             Timer.Reset();
-            GameOverUIController.Reset();
+            Instance.GetComponent<GameOverUIController>().Reset();
             PlayerEnteredVictoryZone = false;
             Instance.GetComponent<LoadScene>().Load();
         }

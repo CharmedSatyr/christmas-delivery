@@ -8,26 +8,34 @@ namespace Platformer.UI
 {
     public class GameOverUIController : MonoBehaviour
     {
-        private static bool gameOverUIEnabled = false;
-
-        private static TextMeshProUGUI gameOverUI;
-        private static Button retryButton;
+        private TextMeshProUGUI gameOverUI;
+        private TextMeshProUGUI result;
+        private TextMeshProUGUI details;
+        private TextMeshProUGUI highScore;
+        private Button retryButton;
 
         void Awake()
         {
             gameOverUI = GameObject.Find("GameOver").GetComponent<TextMeshProUGUI>();
+            result = GameObject.Find("GameOver/Result").GetComponent<TextMeshProUGUI>();
+            details = GameObject.Find("GameOver/Details").GetComponent<TextMeshProUGUI>();
+            highScore = GameObject.Find("GameOver/Details/HighScoreStamp").GetComponent<TextMeshProUGUI>();
             retryButton = gameOverUI.GetComponentInChildren<Button>();
         }
 
         void Start()
         {
+            result.SetText("");
+            details.SetText("");
+            highScore.gameObject.SetActive(false);
             retryButton.gameObject.SetActive(false);
         }
 
         private void Update()
         {
-            if (!gameOverUI || !retryButton)
+            if (!gameOverUI || !retryButton || !result || !details || !highScore)
             {
+                Debug.Log("Missing game over UI elements");
                 return;
             }
 
@@ -36,20 +44,12 @@ namespace Platformer.UI
                 return;
             }
 
-            if (gameOverUIEnabled)
-            {
-                return;
-            }
-
-            gameOverUIEnabled = true;
-
-            EnablePlayAgainButton();
+            EnableGameOverUI();
 
             if (DeliveryController.AllDeliveriesComplete || GameController.PlayerEnteredVictoryZone)
             {
                 SetPlayerVictoryText();
                 return;
-
             }
 
             SetPlayerLostText();
@@ -59,19 +59,22 @@ namespace Platformer.UI
         {
             int finalScore = ScoreController.CalculateFinalScore();
 
-            bool isHighScore = finalScore > ScoreController.HighScore;
-            string highScoreText = isHighScore ? "NEW HIGH SCORE" : "";
+            if (finalScore > ScoreController.HighScore)
+            {
+                highScore.gameObject.SetActive(true);
+            }
 
-            gameOverUI.SetText(
-                    String.Join(Environment.NewLine,
-                    "Level Complete!",
+            result.SetText("Level Complete!");
+
+            details.SetText(
+                    string.Join(Environment.NewLine,
                     $"Gifts Delivered: {DeliveryController.GetCompletedDeliveriesCount()}",
                     $"Deliveries Missed: {DeliveryController.GetIncompleteDeliveriesCount()}",
-                    Environment.NewLine,
+                    string.Empty,
                     $"Score: {ScoreController.Score}",
                     $"Penalty: {-1 * ScoreController.CalculatePenalty()}",
                     $"Time Bonus: {ScoreController.CalculateTimeBonus()}",
-                    $"Final: {finalScore} {highScoreText}")
+                    $"Final: {finalScore}")
                 );
         }
 
@@ -79,31 +82,35 @@ namespace Platformer.UI
         {
             int finalScore = ScoreController.CalculateFinalScore();
 
-            bool isHighScore = finalScore > ScoreController.HighScore;
-            string highScoreText = isHighScore ? "NEW HIGH SCORE" : "";
+            if (finalScore > ScoreController.HighScore)
+            {
+                highScore.gameObject.SetActive(true);
+            }
 
-            gameOverUI.SetText(
-                String.Join(Environment.NewLine,
-                "Out of time!",
+            result.SetText("Out of Time!");
+
+            details.SetText(
+                string.Join(Environment.NewLine,
                 $"Gifts Delivered: {DeliveryController.GetCompletedDeliveriesCount()}",
                 $"Deliveries Missed: {DeliveryController.GetIncompleteDeliveriesCount()}",
-                Environment.NewLine,
+                string.Empty,
                 $"Score: {ScoreController.Score}",
                 $"Penalty: {-1 * ScoreController.CalculatePenalty()}",
-                $"Final: {finalScore} {highScoreText}")
+                $"Final: {finalScore}")
             );
         }
 
-        private void EnablePlayAgainButton()
+        private void EnableGameOverUI()
         {
             retryButton.gameObject.SetActive(true);
         }
 
-        public static void Reset()
+        public void Reset()
         {
             retryButton.gameObject.SetActive(false);
-            gameOverUIEnabled = false;
-            gameOverUI.SetText("");
+            result.SetText("");
+            details.SetText("");
+            highScore.gameObject.SetActive(false);
         }
     }
 }
