@@ -2041,7 +2041,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0.014, y: 0.391, z: 20.977}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 193, y: -272}
+  m_AnchoredPosition: {x: 176, y: -272}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &269543793
@@ -9687,8 +9687,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.31730008, y: 0.10960007, z: 0}
-    m_Extent: {x: 4.2832003, y: 5.7398, z: 0}
+    m_Center: {x: -0.31455016, y: 0.10624981, z: 0}
+    m_Extent: {x: 4.2765503, y: 5.73595, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 1
@@ -14381,7 +14381,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846024791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1019487, y: -0.78552026, z: -9}
+  m_LocalPosition: {x: -2.290164, y: -0.78552026, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
