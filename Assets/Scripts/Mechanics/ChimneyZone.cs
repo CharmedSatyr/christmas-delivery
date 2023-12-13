@@ -11,7 +11,7 @@ namespace Platformer.Mechanics
     public class ChimneyZone : MonoBehaviour
     {
         public GameObject completedIndicator;
-        public bool IsActive { get; private set; } = true;
+        public bool IsActive { get; set; } = true;
 
         void OnTriggerEnter2D(Collider2D collider)
         {

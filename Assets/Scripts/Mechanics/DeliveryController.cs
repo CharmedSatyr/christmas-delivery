@@ -84,5 +84,13 @@ namespace Platformer.Mechanics
             // Calculate the count of completed deliveries
             return chimneyCount - GetIncompleteDeliveriesCount();
         }
+
+        public static void Reset()
+        {
+            foreach (ChimneyZone chimney in chimneys)
+            {
+                chimney.IsActive = true;
+            }
+        }
     }
 }
