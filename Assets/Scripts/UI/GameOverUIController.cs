@@ -46,7 +46,7 @@ namespace Platformer.UI
 
             EnableGameOverUI();
 
-            if (DeliveryController.AllDeliveriesComplete || GameController.PlayerEnteredVictoryZone)
+            if (GameController.PlayerEnteredVictoryZone)
             {
                 SetPlayerVictoryText();
                 return;

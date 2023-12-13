@@ -56,7 +56,7 @@ namespace Platformer.Mechanics
         public static bool IsGameOver()
         {
             // Win
-            if (DeliveryController.AllDeliveriesComplete || PlayerEnteredVictoryZone)
+            if (PlayerEnteredVictoryZone)
             {
                 return true;
             }
