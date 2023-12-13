@@ -11,7 +11,7 @@ namespace Platformer.UI
         private TextMeshProUGUI countdownTimer;
 
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             // Find the TextMeshProUGUI component named "Timer" in the scene
             displayTimer = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
@@ -22,12 +22,13 @@ namespace Platformer.UI
         // Update is called once per frame
         void Update()
         {
-            // Check if the displayTimer is null (not found in the scene)
             if (!displayTimer || !countdownTimer)
             {
                 Debug.Log("Stuck in here");
                 return;
             }
+
+            HandleCountdownTimer();
 
             // Change text color to red when Timer's SecondsRemaining is less than or equal to 10 seconds
             if (Timer.SecondsRemaining <= 10)
@@ -45,11 +46,20 @@ namespace Platformer.UI
             // Set the formatted time to the TextMeshProUGUI component
             displayTimer.SetText($"{formattedTime}");
 
-            float countdownSeconds = Mathf.CeilToInt(Timer.RaceCountDown);
+        }
+
+        private void HandleCountdownTimer()
+        {
+            countdownTimer.SetText("READY");
+
+            if (!Timer.Counting)
+            {
+                return;
+            }
 
             if (Timer.RaceCountDown > 0)
             {
-                countdownTimer.SetText($"{countdownSeconds}");
+                countdownTimer.SetText($"{Timer.RaceCountDown}");
             }
             else if (Timer.RaceCountDown >= -1)
             {

@@ -1,10 +1,12 @@
+using System.Collections;
 using UnityEngine;
+
 
 namespace Platformer.Mechanics
 {
     public class Timer : MonoBehaviour
     {
-        private static readonly float startingSeconds = 5f;
+        private static readonly float startingSeconds = 60f;
         public static float SecondsRemaining { get; set; }
 
         public float almostUpTime = 10f;  // Time (in seconds) when the almost-up sound should play
@@ -15,12 +17,19 @@ namespace Platformer.Mechanics
         private static bool almostUpSoundPlayed = false;
         private static bool timeUpSoundPlayed = false;
 
+        public AudioClip countdownJingle;
         public static float RaceCountDown { get; private set; } = 3;
+        public static bool Counting = false;
 
-        void Start()
+        private void Awake()
         {
             SecondsRemaining = startingSeconds;
             audioSource = GetComponent<AudioSource>();
+        }
+
+        void Start()
+        {
+            CountDownToStart();
         }
 
         public static void AddTime(float seconds = 1.0f)
@@ -30,8 +39,6 @@ namespace Platformer.Mechanics
 
         void Update()
         {
-            CountDownToStart();
-
             if (!GameController.DidGameStart())
             {
                 return;
@@ -79,12 +86,35 @@ namespace Platformer.Mechanics
             RaceCountDown = 3;
         }
 
-        private static void CountDownToStart()
+        private IEnumerator Countdown()
         {
-            if (RaceCountDown > -1)
+            Counting = true;
+
+            while (RaceCountDown >= -2)
             {
-                RaceCountDown -= Time.deltaTime;
+                if (RaceCountDown >= 0)
+                {
+                    audioSource.PlayOneShot(countdownJingle);
+                }
+
+                yield return new WaitForSeconds(1);
+
+                RaceCountDown--;
             }
+
+            Counting = false;
+        }
+
+        private IEnumerator WaitThenCountdown(int seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+
+            StartCoroutine(Countdown());
+        }
+
+        private void CountDownToStart()
+        {
+            StartCoroutine(WaitThenCountdown(2));
         }
     }
 }

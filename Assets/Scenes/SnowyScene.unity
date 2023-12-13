@@ -10994,6 +10994,7 @@ MonoBehaviour:
   almostUpTime: 10
   almostUpSound: {fileID: 8300000, guid: 704ab0d2ca8b6b44e923d592eb42f971, type: 3}
   timeUpSound: {fileID: 8300000, guid: 74fdb0df83fdaa54f9c90d88684380d4, type: 3}
+  countdownJingle: {fileID: 8300000, guid: 206b7495b40561c4ba5edda9d8faa342, type: 3}
 --- !u!82 &1807759179
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11493,7 +11494,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846024791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5051665, y: -0.78552026, z: -9}
+  m_LocalPosition: {x: 1.2309794, y: -0.78552026, z: -9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
