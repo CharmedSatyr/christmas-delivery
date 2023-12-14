@@ -6,7 +6,6 @@ namespace Platformer.Mechanics
     public class DeliveryController : MonoBehaviour
     {
         private static ChimneyZone[] chimneys = { };
-        private static int chimneyCount = 0;
 
         // Win condition
         public static bool AllDeliveriesComplete { get; private set; } = false;
@@ -17,19 +16,17 @@ namespace Platformer.Mechanics
 
         private AudioSource audioSource;
 
-        void Awake()
+        void Start()
         {
             // Get the AudioSource component attached to this GameObject
             audioSource = GetComponent<AudioSource>();
-
-            if (chimneys.Length == 0)
-            {
-                FindAllChimneysInScene();
-            }
         }
 
         void Update()
         {
+            // Non-ideal to do this every time - quick fix to chimneys array getting stale between restarts.
+            FindAllChimneysInScene();
+
             // Update the win condition based on delivery status
             AllDeliveriesComplete = AreAllDeliveriesComplete();
         }
@@ -39,7 +36,6 @@ namespace Platformer.Mechanics
         {
             // Find all ChimneyZone objects in the scene and store them in the chimneys array
             chimneys = FindObjectsOfType<ChimneyZone>();
-            chimneyCount = chimneys.Length;
         }
 
         private static int GetActiveChimneyCount()
@@ -50,7 +46,7 @@ namespace Platformer.Mechanics
 
         private bool AreAllDeliveriesComplete()
         {
-            if (chimneyCount == 0)
+            if (chimneys.Length == 0)
             {
                 // Log a message if no chimneys are detected
                 Debug.Log("No chimneys detected.");
@@ -58,6 +54,7 @@ namespace Platformer.Mechanics
             }
 
             int activeChimneys = GetActiveChimneyCount();
+            // Debug.Log($"active chimneys: {activeChimneys}");
 
             // Play sound for correct or wrong delivery based on the delivery status
             if (activeChimneys == 0 && correctDeliverySound != null)
@@ -82,15 +79,11 @@ namespace Platformer.Mechanics
         public static int GetCompletedDeliveriesCount()
         {
             // Calculate the count of completed deliveries
-            return chimneyCount - GetIncompleteDeliveriesCount();
+            return chimneys.Length - GetIncompleteDeliveriesCount();
         }
 
         public static void Reset()
         {
-            foreach (ChimneyZone chimney in chimneys)
-            {
-                chimney.IsActive = true;
-            }
         }
     }
 }
